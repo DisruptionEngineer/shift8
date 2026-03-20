@@ -383,7 +383,7 @@ export default function Shift8() {
   const section = SECTIONS[sec];
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0c", color: "#c8b88a", fontFamily: "'Cormorant Garamond', serif", position: "relative", overflow: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#0a0a0c", color: "#c8b88a", fontFamily: "'Cormorant Garamond', serif", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
       <style>{`
         @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} } .blink{animation:blink 1s infinite}
@@ -441,7 +441,7 @@ export default function Shift8() {
       </div>
 
       {/* main */}
-      <div style={{ padding: "40px 48px 48px", maxWidth: 800, position: "relative", zIndex: 1 }}>
+      <div style={{ padding: "40px 48px 48px", maxWidth: 800, margin: "0 auto", width: "100%", position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div className="fade-in" key={section.id} style={{ marginBottom: 40 }}>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 400, color: "#f0e6c8", margin: "0 0 6px", letterSpacing: "0.02em" }}>{section.title}</h2>
           <p style={{ fontSize: "1.05rem", fontStyle: "italic", color: "#888", margin: 0, fontWeight: 300 }}>{section.subtitle}</p>
