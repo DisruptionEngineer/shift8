@@ -367,10 +367,12 @@ export default function Shift8() {
   const [journeyMode, setJourneyMode] = useState(false);
   const shiftHeld = useRef(false);
 
+  const handleQueryExit = useCallback(() => setQueryMode(false), []);
+
   useEffect(() => {
     const down = (e) => {
       if (e.key === "Shift") { shiftHeld.current = true; setShifted(true); }
-      if (e.key === "*" && shiftHeld.current) setQueryMode(true);
+      if (e.key === "*" || (e.key === "8" && e.shiftKey)) setQueryMode(true);
     };
     const up = (e) => { if (e.key === "Shift") { shiftHeld.current = false; setShifted(false); } };
     window.addEventListener("keydown", down);
@@ -402,7 +404,7 @@ export default function Shift8() {
         *{box-sizing:border-box} ::-webkit-scrollbar{width:0}
       `}</style>
 
-      {queryMode && <QueryExperience onExit={useCallback(() => setQueryMode(false), [])} />}
+      {queryMode && <QueryExperience onExit={handleQueryExit} />}
       {journeyMode && <JourneyView onClose={() => setJourneyMode(false)} />}
 
       {/* grain */}
