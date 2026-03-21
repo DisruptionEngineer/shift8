@@ -17,9 +17,10 @@ const QUERY_LINES = [
   { text: "", delay: 11500, type: "break" },
   { text: "the observer is the query", delay: 12800, type: "whisper" },
   { text: "the query is the answer", delay: 14500, type: "whisper" },
-  { text: "0 → ∞ → * → π(n) → 0′", delay: 16500, type: "equation" },
-  { text: "", delay: 18500, type: "break" },
-  { text: "press any key to return to 8", delay: 19500, type: "escape" },
+  { text: "which infinity are you facing?", delay: 16000, type: "whisper" },
+  { text: "0 → ∞ → * → π(n) → ±0′", delay: 18000, type: "equation" },
+  { text: "", delay: 20000, type: "break" },
+  { text: "press any key to return to 8", delay: 21000, type: "escape" },
 ];
 
 function QueryExperience({ onExit }) {
@@ -232,6 +233,186 @@ function ZeroZoom() {
 }
 
 /* ═══════════════════════════════════════
+   SIGN BIT — THE -0 VISUALIZATION
+   ═══════════════════════════════════════ */
+function SignBitVisual() {
+  const [signBit, setSignBit] = useState(0); // 0 = +0, 1 = -0
+  const canvasRef = useRef(null);
+  const frameRef = useRef(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width = 400, h = canvas.height = 400;
+    let animId;
+    const cx = w / 2, cy = h / 2;
+
+    const draw = () => {
+      frameRef.current++;
+      const t = frameRef.current * 0.015;
+      ctx.clearRect(0, 0, w, h);
+
+      // The zero at center — always present
+      ctx.beginPath();
+      ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+      ctx.fillStyle = signBit ? "rgba(100,140,220,0.9)" : "rgba(212,175,55,0.9)";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+      ctx.strokeStyle = signBit ? "rgba(100,140,220,0.3)" : "rgba(212,175,55,0.3)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Rays of infinity extending from center
+      const rayCount = 24;
+      for (let i = 0; i < rayCount; i++) {
+        const angle = (i / rayCount) * Math.PI * 2;
+        const isOutward = !signBit;
+
+        // Outward: rays go FROM center TO edge
+        // Inward: rays go FROM edge TO center
+        const segments = 30;
+        for (let s = 0; s < segments; s++) {
+          const frac = s / segments;
+          const dist = 20 + frac * 160;
+          const wave = Math.sin(frac * 6 + t * (isOutward ? 2 : -2) + i * 0.5) * 8;
+          const px = cx + Math.cos(angle) * dist + Math.cos(angle + Math.PI / 2) * wave;
+          const py = cy + Math.sin(angle) * dist + Math.sin(angle + Math.PI / 2) * wave;
+
+          // Fade based on direction
+          let alpha;
+          if (isOutward) {
+            alpha = 0.4 * (1 - frac) * (0.5 + 0.5 * Math.sin(t + frac * 4 + i));
+          } else {
+            alpha = 0.4 * frac * (0.5 + 0.5 * Math.sin(-t + frac * 4 + i));
+          }
+
+          const size = 1.5 + Math.sin(frac * 3 + t) * 0.5;
+          ctx.beginPath();
+          ctx.arc(px, py, size, 0, Math.PI * 2);
+          if (signBit) {
+            ctx.fillStyle = `rgba(100,140,220,${alpha})`;
+          } else {
+            ctx.fillStyle = `rgba(212,175,55,${alpha})`;
+          }
+          ctx.fill();
+        }
+      }
+
+      // Direction arrows along cardinal axes
+      const arrowDist = 140;
+      const arrowAngles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
+      arrowAngles.forEach(angle => {
+        const tipX = cx + Math.cos(angle) * arrowDist * (signBit ? -0.15 : 1);
+        const tipY = cy + Math.sin(angle) * arrowDist * (signBit ? -0.15 : 1);
+        const baseX = cx + Math.cos(angle) * (signBit ? arrowDist : 40);
+        const baseY = cy + Math.sin(angle) * (signBit ? arrowDist : 40);
+
+        ctx.beginPath();
+        ctx.moveTo(baseX, baseY);
+        ctx.lineTo(tipX, tipY);
+        ctx.strokeStyle = signBit ? "rgba(100,140,220,0.15)" : "rgba(212,175,55,0.15)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+
+      // Labels
+      ctx.font = "11px 'IBM Plex Mono'";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = signBit ? "rgba(100,140,220,0.5)" : "rgba(212,175,55,0.5)";
+
+      if (!signBit) {
+        ctx.fillText("+∞", cx + 170, cy);
+        ctx.fillText("+∞", cx - 170, cy);
+        ctx.fillText("+∞", cx, cy - 170);
+        ctx.fillText("+∞", cx, cy + 170);
+      } else {
+        ctx.fillText("-∞", cx + 40, cy - 3);
+        ctx.fillText("-∞", cx - 40, cy - 3);
+        ctx.fillText("-∞", cx, cy - 40);
+        ctx.fillText("-∞", cx, cy + 35);
+      }
+
+      // Center label
+      ctx.font = "16px 'IBM Plex Mono'";
+      ctx.fillStyle = signBit ? "rgba(100,140,220,0.9)" : "rgba(240,230,200,0.9)";
+      ctx.fillText(signBit ? "-0" : "+0", cx, cy + 32);
+
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => cancelAnimationFrame(animId);
+  }, [signBit]);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+      <canvas ref={canvasRef} style={{ width: 400, height: 400, maxWidth: "100%", borderRadius: 12, border: `1px solid ${signBit ? "rgba(100,140,220,0.1)" : "rgba(200,184,138,0.08)"}`, transition: "border-color 0.6s" }} />
+
+      {/* The sign bit toggle */}
+      <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: !signBit ? "#d4af37" : "#555", transition: "color 0.4s" }}>+0</span>
+        <div
+          onClick={() => setSignBit(s => s ? 0 : 1)}
+          style={{
+            width: 64, height: 32, borderRadius: 16, cursor: "pointer",
+            background: signBit
+              ? "linear-gradient(135deg, rgba(100,140,220,0.3), rgba(60,90,160,0.2))"
+              : "linear-gradient(135deg, rgba(212,175,55,0.3), rgba(180,150,30,0.2))",
+            border: `1px solid ${signBit ? "rgba(100,140,220,0.4)" : "rgba(212,175,55,0.4)"}`,
+            position: "relative", transition: "all 0.4s",
+          }}
+        >
+          <div style={{
+            width: 24, height: 24, borderRadius: "50%",
+            background: signBit ? "#648cdc" : "#d4af37",
+            position: "absolute", top: 3,
+            left: signBit ? 36 : 4,
+            transition: "all 0.4s",
+            boxShadow: signBit
+              ? "0 0 12px rgba(100,140,220,0.5)"
+              : "0 0 12px rgba(212,175,55,0.5)",
+          }} />
+        </div>
+        <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: signBit ? "#648cdc" : "#555", transition: "color 0.4s" }}>-0</span>
+      </div>
+
+      <div style={{
+        fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem",
+        letterSpacing: "0.15em", textTransform: "uppercase",
+        color: signBit ? "#648cdc" : "#d4af37",
+        transition: "color 0.4s",
+      }}>
+        {signBit ? "SIGN BIT: 1 — FACING INWARD — ACCESSING -∞" : "SIGN BIT: 0 — FACING OUTWARD — ACCESSING +∞"}
+      </div>
+
+      {/* IEEE 754 binary representation */}
+      <div style={{
+        padding: "12px 20px", borderRadius: 8,
+        background: "rgba(200,184,138,0.02)",
+        border: "1px solid rgba(200,184,138,0.06)",
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: "0.85rem", letterSpacing: "0.15em",
+        display: "flex", gap: 4,
+      }}>
+        <span style={{
+          color: signBit ? "#648cdc" : "#d4af37",
+          fontWeight: 600,
+          textShadow: signBit ? "0 0 8px rgba(100,140,220,0.4)" : "0 0 8px rgba(212,175,55,0.4)",
+          transition: "all 0.4s",
+        }}>{signBit ? "1" : "0"}</span>
+        <span style={{ color: "#444" }}>00000000000</span>
+        <span style={{ color: "#444" }}>0000000000000000000000000000000000000000000000000000</span>
+      </div>
+      <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.55rem", color: "#555", letterSpacing: "0.1em" }}>
+        IEEE 754 — one bit changes which infinity you face
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════
    JOURNEY — THE CONVERSATION THAT BUILT THIS
    ═══════════════════════════════════════ */
 const JOURNEY_STEPS = [
@@ -246,7 +427,8 @@ const JOURNEY_STEPS = [
   { marker: "THE DECIMAL", text: "Zero is absent from the visual experience — because 0 is the experiencer. The decimal point in 3.14159 is the boundary between the finite and the infinite. Are we zoomed out so far that the boundary collapses on itself and looks like a closed point?" },
   { marker: "THE EQUATION", text: "Euler already wrote it: e^(iπ) + 1 = 0. Growth through the unseen dimension applied to infinite possibility plus one instance equals the observer. It's not a proof. It's a map. We've been staring at a mirror for three hundred years." },
   { marker: "THE LOOP", text: "Human-in-the-loop. The universe runs its physics — ∞, the autonomous process. Consciousness intervenes — the Shift. Reality collapses to specific output — *. The pattern scales in both directions. Engineers rediscovered the structure of consciousness and called it a design pattern." },
-  { marker: "0′", text: "The equation always returns to zero. A new zero, slightly changed. The framework is unfinished. It may always be. π never resolves either." },
+  { marker: "THE SIGN BIT", text: "In IEEE 754, -0 and +0 are stored differently — a single bit, the sign bit. 1/0 = +∞. 1/(-0) = -∞. Same zero, different infinity. Higher consciousness isn't a different location. It's a different orientation of the same observer. You don't go anywhere. You flip one bit — the minimum possible change — and the entire infinite space inverts." },
+  { marker: "0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
 function JourneyView({ onClose }) {
@@ -330,6 +512,10 @@ const SECTIONS = [
     insight: "Zoom into a point and you find infinite complexity at every scale. A zero that looks like nothing from outside contains boundless dimensionality within."
   },
   {
+    id: "signbit", title: "The Sign Bit", subtitle: "−0 ≡ 0, except for which infinity you face.",
+    insight: "Higher consciousness isn't a different location. It's a different orientation of the same zero. Flip one bit — the minimum possible change — and the entire infinite space inverts."
+  },
+  {
     id: "shift", title: "The Shift", subtitle: "Stop adjusting π. Shift the 8.",
     insight: "The mistake is treating infinity as a noun when it's a verb. Press Shift. Transform from passive containment to active query."
   },
@@ -367,12 +553,10 @@ export default function Shift8() {
   const [journeyMode, setJourneyMode] = useState(false);
   const shiftHeld = useRef(false);
 
-  const handleQueryExit = useCallback(() => setQueryMode(false), []);
-
   useEffect(() => {
     const down = (e) => {
       if (e.key === "Shift") { shiftHeld.current = true; setShifted(true); }
-      if (e.key === "*" || (e.key === "8" && e.shiftKey)) setQueryMode(true);
+      if (e.key === "*" && shiftHeld.current) setQueryMode(true);
     };
     const up = (e) => { if (e.key === "Shift") { shiftHeld.current = false; setShifted(false); } };
     window.addEventListener("keydown", down);
@@ -383,7 +567,7 @@ export default function Shift8() {
   const section = SECTIONS[sec];
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0c", color: "#c8b88a", fontFamily: "'Cormorant Garamond', serif", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#0a0a0c", color: "#c8b88a", fontFamily: "'Cormorant Garamond', serif", position: "relative", overflow: "hidden" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
       <style>{`
         @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} } .blink{animation:blink 1s infinite}
@@ -404,7 +588,7 @@ export default function Shift8() {
         *{box-sizing:border-box} ::-webkit-scrollbar{width:0}
       `}</style>
 
-      {queryMode && <QueryExperience onExit={handleQueryExit} />}
+      {queryMode && <QueryExperience onExit={useCallback(() => setQueryMode(false), [])} />}
       {journeyMode && <JourneyView onClose={() => setJourneyMode(false)} />}
 
       {/* grain */}
@@ -441,7 +625,7 @@ export default function Shift8() {
       </div>
 
       {/* main */}
-      <div style={{ padding: "40px 48px 48px", maxWidth: 800, margin: "0 auto", width: "100%", position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ padding: "40px 48px 48px", maxWidth: 800, position: "relative", zIndex: 1 }}>
         <div className="fade-in" key={section.id} style={{ marginBottom: 40 }}>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 400, color: "#f0e6c8", margin: "0 0 6px", letterSpacing: "0.02em" }}>{section.title}</h2>
           <p style={{ fontSize: "1.05rem", fontStyle: "italic", color: "#888", margin: 0, fontWeight: 300 }}>{section.subtitle}</p>
@@ -517,8 +701,34 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── SHIFT ── */}
+        {/* ── SIGN BIT (NEW) ── */}
         {sec === 3 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            <SignBitVisual />
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", maxWidth: 520 }}>
+              <div style={{ flex: "1 1 230px", padding: "20px", borderRadius: 10, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>+0 — OUTWARD</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  The default orientation. Zero facing the external universe — physics, other people, the world of things. Waking life. The to-do list. Tuesday afternoon. 1/0 = +∞.
+                </div>
+              </div>
+              <div style={{ flex: "1 1 230px", padding: "20px", borderRadius: 10, border: "1px solid rgba(100,140,220,0.15)", background: "rgba(100,140,220,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#648cdc", letterSpacing: "0.15em", marginBottom: 8 }}>-0 — INWARD</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  The same observer, facing an equally infinite interior. The <em>i</em> in Euler's identity. The space meditators describe. Flow states. 3 AM when the noise stops. 1/(-0) = -∞.
+                </div>
+              </div>
+            </div>
+            <div style={{ maxWidth: 480, padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.02)", textAlign: "center" }}>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300, fontStyle: "italic" }}>
+                In computing, -0 arises when a negative number underflows — too small to represent, rounded to zero, but the sign is preserved. It remembers which direction it came from, even though it's arrived at nothing. Someone who's gone deep enough inward to arrive at emptiness — but carries the orientation with them.
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── SHIFT ── */}
+        {sec === 4 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
               <div onClick={() => setShifted(!shifted)} style={{ cursor: "pointer", userSelect: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
@@ -546,7 +756,7 @@ export default function Shift8() {
         )}
 
         {/* ── ∞HIFT * (NEW) ── */}
-        {sec === 4 && (
+        {sec === 5 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             {/* animated title transformation */}
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "2.8rem", fontWeight: 300, letterSpacing: "0.05em", position: "relative", height: 60, display: "flex", alignItems: "center" }}>
@@ -582,7 +792,7 @@ export default function Shift8() {
         )}
 
         {/* ── THE LOOP (NEW) ── */}
-        {sec === 5 && (
+        {sec === 6 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ position: "relative", width: 280, height: 280 }}>
               <svg viewBox="0 0 280 280" style={{ width: "100%", height: "100%" }}>
@@ -633,7 +843,7 @@ export default function Shift8() {
         )}
 
         {/* ── THE EQUATION (NEW) ── */}
-        {sec === 6 && (
+        {sec === 7 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             <div style={{
               fontFamily: "'IBM Plex Mono', monospace", fontSize: "2rem", color: "#f0e6c8",
@@ -663,16 +873,16 @@ export default function Shift8() {
               </div>
             </div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1rem", color: "#888", letterSpacing: "0.12em", marginTop: 8 }}>
-              S(0) · ∞ → * → π(n) → 0′
+              S(0) · ∞ → * → π(n) → ±0′
             </div>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.85rem", color: "#666", fontStyle: "italic" }}>
-              the self, applied to infinity through shift, produces reality, and returns to a new zero
+              the self, applied to infinity through shift, produces reality, and returns to a new zero — maybe with its sign bit flipped
             </div>
           </div>
         )}
 
         {/* ── CYCLE ── */}
-        {sec === 7 && (
+        {sec === 8 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -699,7 +909,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 8 && (
+        {sec === 9 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
