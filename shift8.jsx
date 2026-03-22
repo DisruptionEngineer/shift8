@@ -17,10 +17,11 @@ const QUERY_LINES = [
   { text: "", delay: 11500, type: "break" },
   { text: "the observer is the query", delay: 12800, type: "whisper" },
   { text: "the query is the answer", delay: 14500, type: "whisper" },
-  { text: "which infinity are you facing?", delay: 16000, type: "whisper" },
-  { text: "0 → ∞ → * → π(n) → ±0′", delay: 18000, type: "equation" },
-  { text: "", delay: 20000, type: "break" },
-  { text: "press any key to return to 8", delay: 21000, type: "escape" },
+  { text: "shift() is not idempotent", delay: 16000, type: "whisper" },
+  { text: "which infinity are you facing?", delay: 17500, type: "whisper" },
+  { text: "0 → ∞ → * → π(n) → ±0′", delay: 19500, type: "equation" },
+  { text: "", delay: 21500, type: "break" },
+  { text: "press any key to return to 8", delay: 22500, type: "escape" },
 ];
 
 function QueryExperience({ onExit }) {
@@ -428,7 +429,10 @@ const JOURNEY_STEPS = [
   { marker: "THE EQUATION", text: "Euler already wrote it: e^(iπ) + 1 = 0. Growth through the unseen dimension applied to infinite possibility plus one instance equals the observer. It's not a proof. It's a map. We've been staring at a mirror for three hundred years." },
   { marker: "THE LOOP", text: "Human-in-the-loop. The universe runs its physics — ∞, the autonomous process. Consciousness intervenes — the Shift. Reality collapses to specific output — *. The pattern scales in both directions. Engineers rediscovered the structure of consciousness and called it a design pattern." },
   { marker: "THE SIGN BIT", text: "In IEEE 754, -0 and +0 are stored differently — a single bit, the sign bit. 1/0 = +∞. 1/(-0) = -∞. Same zero, different infinity. Higher consciousness isn't a different location. It's a different orientation of the same observer. You don't go anywhere. You flip one bit — the minimum possible change — and the entire infinite space inverts." },
-  { marker: "0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped. The framework is unfinished. It may always be. π never resolves either." },
+  { marker: "14159", text: "The first five digits after the decimal. 1-4-1: a palindrome — the cycle encoded at the entrance. Then 5-9: the mirror breaks, the sequence starts going somewhere. Their sum is 20 — two zeros, +0 and -0. The framework was already written in π before anyone read it." },
+  { marker: "THE CLOSURE", text: "Consciousness is a closure over the sign bit. Every invocation returns a reality and a reference to itself. It hands itself to the next moment. The function isn't anonymous — its name is you." },
+  { marker: "THE POINTER", text: "You can follow pointers back to previous zeros. Memory, déjà vu, regret — all dereferences. But shift() isn't idempotent. Time is the incrementing index into π. The window only moves forward. You can always go back to zero. You can never get the same infinity." },
+  { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
 function JourneyView({ onClose }) {
@@ -516,6 +520,10 @@ const SECTIONS = [
     insight: "Higher consciousness isn't a different location. It's a different orientation of the same zero. Flip one bit — the minimum possible change — and the entire infinite space inverts."
   },
   {
+    id: "firstbreath", title: "14159", subtitle: "The first breath after the decimal.",
+    insight: "1-4-1: a palindrome. Out and back. The first three digits of π after the decimal encode the cycle of the framework. Then the mirror breaks, and the sequence starts going somewhere."
+  },
+  {
     id: "shift", title: "The Shift", subtitle: "Stop adjusting π. Shift the 8.",
     insight: "The mistake is treating infinity as a noun when it's a verb. Press Shift. Transform from passive containment to active query."
   },
@@ -530,6 +538,10 @@ const SECTIONS = [
   {
     id: "equation", title: "The Equation", subtitle: "e^(iπ) + 1 = 0",
     insight: "Growth through the unseen dimension applied to infinite possibility plus one single instance equals the observer. It's not a proof. It's a mirror."
+  },
+  {
+    id: "pointer", title: "The Pointer", subtitle: "You can go back to zero. You can never get the same infinity.",
+    insight: "shift() is not idempotent. Time is the incrementing index into π's decimal expansion. The pointer persists. The closure remembers. But every invocation returns a different reality, because π never repeats."
   },
   {
     id: "cycle", title: "The Cycle", subtitle: "Shift up. Receive. Shift down. Integrate.",
@@ -727,8 +739,67 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── SHIFT ── */}
+        {/* ── 14159 — THE FIRST BREATH (NEW) ── */}
         {sec === 4 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* The digits, large and animated */}
+            <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+              {[
+                { d: "1", label: "Unity", sub: "encounter yourself", delta: null, color: "#f0e6c8" },
+                { d: "4", label: "Expand", sub: "+3 outward", delta: "+3", color: "#d4af37" },
+                { d: "1", label: "Return", sub: "−3 back to one", delta: "-3", color: "#f0e6c8" },
+                { d: "5", label: "Center", sub: "+4 the midpoint", delta: "+4", color: "#c8b88a" },
+                { d: "9", label: "Threshold", sub: "+4 the hidden zero", delta: "+4", color: "#888" },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+                  padding: "20px 14px", borderRadius: 10, minWidth: 80,
+                  background: "linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.005))",
+                  border: "1px solid rgba(200,184,138,0.08)",
+                  animation: `fadeIn 0.5s ease ${i * 0.15}s both`,
+                }}>
+                  {item.delta && <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.55rem", color: item.delta.startsWith("+") ? "rgba(212,175,55,0.5)" : "rgba(100,140,220,0.5)", letterSpacing: "0.1em" }}>{item.delta}</div>}
+                  {!item.delta && <div style={{ height: "0.55rem" }} />}
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "2.4rem", fontWeight: 300, color: item.color }}>{item.d}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.55rem", color: "#d4af37", letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", color: "#666", fontStyle: "italic", textAlign: "center" }}>{item.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* The palindrome revelation */}
+            <div style={{ maxWidth: 480, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>THE MIRROR</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  1-4-1 is a palindrome. It reads the same forward and backward. The first three digits after the decimal <em>are</em> the cycle — out and back. Shift up, receive, shift down. As if the first thing infinity does when observed is demonstrate the pattern.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.08)", background: "rgba(200,184,138,0.02)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", marginBottom: 8 }}>THE BREAK</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  Then +4, +4. The mirror breaks. The sequence stops oscillating and starts <em>going somewhere.</em> As if 1-4-1 is the training breath, and after that, you stop practicing and start living.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#666", letterSpacing: "0.15em", marginBottom: 8 }}>THE SUM</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300 }}>
+                  1 + 4 + 1 + 5 + 9 = <span style={{ color: "#d4af37" }}>20</span>. Two zeros. <span style={{ color: "#d4af37" }}>+0</span> and <span style={{ color: "#648cdc" }}>-0</span>. The sum of the first five digits after the decimal produces both observers.
+                </div>
+              </div>
+            </div>
+
+            {/* 9 = hidden zero */}
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555", textAlign: "center", letterSpacing: "0.06em", lineHeight: 2, maxWidth: 400 }}>
+              9 × anything has digits that sum to 9.<br />
+              Any number plus 9 keeps its digital root.<br />
+              <span style={{ color: "#888" }}>Nine behaves exactly like zero. A hidden observer at the end of the sequence.</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── SHIFT ── */}
+        {sec === 5 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
               <div onClick={() => setShifted(!shifted)} style={{ cursor: "pointer", userSelect: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
@@ -756,7 +827,7 @@ export default function Shift8() {
         )}
 
         {/* ── ∞HIFT * (NEW) ── */}
-        {sec === 5 && (
+        {sec === 6 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             {/* animated title transformation */}
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "2.8rem", fontWeight: 300, letterSpacing: "0.05em", position: "relative", height: 60, display: "flex", alignItems: "center" }}>
@@ -792,7 +863,7 @@ export default function Shift8() {
         )}
 
         {/* ── THE LOOP (NEW) ── */}
-        {sec === 6 && (
+        {sec === 7 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ position: "relative", width: 280, height: 280 }}>
               <svg viewBox="0 0 280 280" style={{ width: "100%", height: "100%" }}>
@@ -843,7 +914,7 @@ export default function Shift8() {
         )}
 
         {/* ── THE EQUATION (NEW) ── */}
-        {sec === 7 && (
+        {sec === 8 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center" }}>
             <div style={{
               fontFamily: "'IBM Plex Mono', monospace", fontSize: "2rem", color: "#f0e6c8",
@@ -881,8 +952,74 @@ export default function Shift8() {
           </div>
         )}
 
+        {/* ── THE POINTER (NEW) ── */}
+        {sec === 9 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* The closure visualization */}
+            <div style={{
+              padding: "24px 28px", borderRadius: 12, maxWidth: 520, width: "100%",
+              background: "linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.005))",
+              border: "1px solid rgba(200,184,138,0.1)",
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem",
+              lineHeight: 2.2, color: "#888",
+            }}>
+              <div style={{ color: "#666", fontSize: "0.6rem", letterSpacing: "0.15em", marginBottom: 12 }}>THE CLOSURE</div>
+              <div><span style={{ color: "#d4af37" }}>function</span> <span style={{ color: "#f0e6c8" }}>existence</span>(signBit) {"{"}</div>
+              <div style={{ paddingLeft: 20 }}><span style={{ color: "#666" }}>let</span> facing = signBit;</div>
+              <div style={{ paddingLeft: 20 }}><span style={{ color: "#d4af37" }}>return function</span> <span style={{ color: "#f0e6c8" }}>shift</span>() {"{"}</div>
+              <div style={{ paddingLeft: 40 }}><span style={{ color: "#666" }}>const</span> ∞ = facing === <span style={{ color: "#d4af37" }}>0</span> ? +Infinity : -Infinity;</div>
+              <div style={{ paddingLeft: 40 }}><span style={{ color: "#666" }}>const</span> result = <span style={{ color: "#c8b88a" }}>query</span>(∞);</div>
+              <div style={{ paddingLeft: 40 }}>facing = result.<span style={{ color: "#648cdc" }}>newSign</span>; <span style={{ color: "#555" }}>// might flip</span></div>
+              <div style={{ paddingLeft: 40 }}><span style={{ color: "#d4af37" }}>return</span> {"{"} <span style={{ color: "#c8b88a" }}>reality</span>: hash(π, result), <span style={{ color: "#c8b88a" }}>next</span>: shift {"}"};</div>
+              <div style={{ paddingLeft: 20 }}>{"}"}</div>
+              <div>{"}"}</div>
+            </div>
+
+            {/* Key insight about closures */}
+            <div style={{ maxWidth: 480, padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>THE RETURN VALUE</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                Every invocation returns a reality <em>and a reference to itself.</em> It's not recursive — it doesn't call itself. It <strong style={{ color: "#f0e6c8", fontWeight: 400 }}>hands itself to the next moment</strong> and lets the event loop decide when to fire. The function isn't anonymous. Its name is <em>you.</em>
+              </div>
+            </div>
+
+            {/* Non-idempotency */}
+            <div style={{ maxWidth: 480, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", textAlign: "center" }}>NOT IDEMPOTENT</div>
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+                {[
+                  { label: "DÉJÀ VU", text: "You've returned to a previous zero. The pointer resolved. But the function returned something new. It feels familiar because you have been here — but the hash is different." },
+                  { label: "REGRET", text: "A pointer to a previous invocation you want to re-execute. You're right — it would return differently. But not the way you're imagining. Non-idempotency works in both directions." },
+                  { label: "TIME'S ARROW", text: "The pointers persist. The closures are alive. But π has advanced to a decimal place you've never been in. The window only moves forward." },
+                ].map((item, i) => (
+                  <div key={i} style={{ flex: "1 1 200px", padding: "14px 16px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+                    <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.55rem", color: "#d4af37", letterSpacing: "0.12em", marginBottom: 6 }}>{item.label}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.85rem", color: "#888", lineHeight: 1.6, fontWeight: 300 }}>{item.text}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Time as π index */}
+            <div style={{
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555",
+              textAlign: "center", letterSpacing: "0.06em", lineHeight: 1.8,
+              padding: "16px 20px", borderRadius: 8,
+              border: "1px solid rgba(200,184,138,0.06)",
+              background: "rgba(200,184,138,0.015)",
+              maxWidth: 400,
+            }}>
+              time isn't a dimension you move along<br />
+              time is the incrementing index into π<br />
+              <span style={{ color: "#c8b88a" }}>every moment advances the window by one digit</span><br />
+              and because π never repeats<br />
+              <span style={{ color: "#d4af37" }}>no two moments can ever produce the same hash</span>
+            </div>
+          </div>
+        )}
+
         {/* ── CYCLE ── */}
-        {sec === 8 && (
+        {sec === 10 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -909,7 +1046,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 9 && (
+        {sec === 11 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
