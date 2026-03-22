@@ -437,6 +437,7 @@ const JOURNEY_STEPS = [
   { marker: "3, 6, 9, 0", text: "Tesla said if you knew the magnificence of 3, 6, and 9 you'd have the key to the universe. He was one digit short. Add 0 — the observer — and it becomes a wheel. 3 is the known world. 6 is the yin, the inward observer. 9 is the yang, the hidden zero. 0 is the eclipse point where duality collapses." },
   { marker: "THE ECLIPSE", text: "The sun is 400× larger than the moon. 400× farther away. From Earth — from the one point where the ratio works — they're the same disc. At totality, 6 and 9 merge into 0 and the corona appears: the hidden structure, always present, revealed when duality collapses. The Shift key pressed by the solar system." },
   { marker: "NATIVE 3", text: "1+1+1=3≠3. Stacked three is assembled from ones on a 1D line. Native three is prime, irreducible, emergent. The sun(9) and moon(6) don't add up to Earth(0) — they generate the conditions for the observer to exist. 9-6=3: the known world is the tension between source and mirror. We've been reading π in 1D when it was written in 3." },
+  { marker: "THE REMAINDER", text: "What happens to infinity when you jump? At 3.14159, your remainder is 14159 — the first breath. Jump to 31.4159 and the remainder is 4159 — the mirror is behind you. Keep jumping: the first breath is consumed digit by digit. At 314159, the remainder becomes 265358 — an entirely new sequence. A new breath. The jump doesn't shrink infinity. It redefines what every remaining digit means." },
   { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped, maybe at a new decimal place. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
@@ -563,6 +564,10 @@ const SECTIONS = [
   {
     id: "native3", title: "Native 3", subtitle: "1 + 1 + 1 = 3 ≠ 3",
     insight: "3 is prime. Irreducible. Not built from parts. The sun and moon don't add up to Earth — they generate the conditions in which the observer can exist. 9 - 6 = 3. The known world is the tension between source and mirror."
+  },
+  {
+    id: "remainder", title: "The Remainder", subtitle: "What happens to infinity when the observer moves?",
+    insight: "The jump doesn't just shrink infinity. It redefines what every remaining digit means. When the full first breath crosses — when 14159 is known — you get 265358. A completely new sequence. The remainder is always infinite. It just keeps showing you new faces."
   },
   {
     id: "cycle", title: "The Cycle", subtitle: "Shift up. Receive. Shift down. Integrate.",
@@ -1286,8 +1291,76 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── CYCLE ── */}
+        {/* ── THE REMAINDER (NEW) ── */}
         {sec === 14 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* The jump table */}
+            <div style={{ width: "100%", maxWidth: 540, overflowX: "auto" }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#666", letterSpacing: "0.15em", marginBottom: 12 }}>THE OBSERVER MOVES THROUGH π</div>
+              {[
+                { known: "3", remainder: "14159...", label: "the mirror. the first breath.", root: "3" },
+                { known: "31", remainder: "4159...", label: "the mirror is behind you. expansion first.", root: "4" },
+                { known: "314", remainder: "159...", label: "you start at center now.", root: "8" },
+                { known: "3141", remainder: "59...", label: "balance and the hidden zero. that's all that's left.", root: "9" },
+                { known: "31415", remainder: "9...", label: "just the hidden zero. just you, disguised.", root: "5" },
+                { known: "314159", remainder: "265358...", label: "the first breath is consumed. a new infinity begins.", root: "5" },
+              ].map((row, i) => (
+                <div key={i} style={{
+                  display: "flex", alignItems: "center", gap: 12, padding: "10px 16px",
+                  borderRadius: 8, marginBottom: 4,
+                  background: i === 3 ? "rgba(212,175,55,0.04)" : i === 5 ? "rgba(100,140,220,0.04)" : "rgba(200,184,138,0.015)",
+                  border: `1px solid ${i === 3 ? "rgba(212,175,55,0.12)" : i === 5 ? "rgba(100,140,220,0.12)" : "rgba(200,184,138,0.04)"}`,
+                  animation: `fadeIn 0.4s ease ${i * 0.12}s both`,
+                }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.9rem", color: "#f0e6c8", minWidth: 70, textAlign: "right" }}>
+                    {row.known}<span style={{ color: "#d4af37" }}>.</span>
+                  </div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.9rem", color: i === 5 ? "#648cdc" : "#888", minWidth: 90 }}>
+                    {row.remainder}
+                  </div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.8rem", color: "#666", fontStyle: "italic", fontWeight: 300, flex: 1 }}>
+                    {row.label}
+                  </div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: row.root === "9" ? "#d4af37" : "#555", minWidth: 20, textAlign: "right" }}>
+                    Σ{row.root}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Key insights */}
+            <div style={{ maxWidth: 500, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>JUMP 3 → DIGITAL ROOT 9</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  After exactly three jumps, the sum of the known world equals 9 — the hidden zero. The system resets. The 3-6-9-0 cycle completes inside the decimal jump sequence itself.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(100,140,220,0.12)", background: "rgba(100,140,220,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#648cdc", letterSpacing: "0.15em", marginBottom: 8 }}>THE SECOND BREATH</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  When 14159 fully crosses, the remainder becomes <span style={{ color: "#648cdc", fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.85rem" }}>265358...</span> — a completely new sequence. The second breath isn't a repeat. It can't be. π never repeats.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", marginBottom: 8 }}>RECONTEXTUALIZATION</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300 }}>
+                  The jump doesn't just shrink infinity — it <em>redefines what every remaining digit means.</em> The 4 in 14159 is different from the 4 in 4159. Same digit, different position, different role. This is what happens when a truth is integrated: the remaining unknowns reorganize.
+                </div>
+              </div>
+            </div>
+
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555", textAlign: "center", letterSpacing: "0.06em", lineHeight: 1.8 }}>
+              you can never exhaust π<br />
+              you can only change where you're standing in it<br />
+              <span style={{ color: "#c8b88a" }}>the remainder is always infinite</span><br />
+              <span style={{ color: "#d4af37" }}>it just keeps showing you new faces</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── CYCLE ── */}
+        {sec === 15 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -1314,7 +1387,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 15 && (
+        {sec === 16 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
