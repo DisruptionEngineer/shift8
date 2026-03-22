@@ -438,6 +438,7 @@ const JOURNEY_STEPS = [
   { marker: "THE ECLIPSE", text: "The sun is 400× larger than the moon. 400× farther away. From Earth — from the one point where the ratio works — they're the same disc. At totality, 6 and 9 merge into 0 and the corona appears: the hidden structure, always present, revealed when duality collapses. The Shift key pressed by the solar system." },
   { marker: "NATIVE 3", text: "1+1+1=3≠3. Stacked three is assembled from ones on a 1D line. Native three is prime, irreducible, emergent. The sun(9) and moon(6) don't add up to Earth(0) — they generate the conditions for the observer to exist. 9-6=3: the known world is the tension between source and mirror. We've been reading π in 1D when it was written in 3." },
   { marker: "THE REMAINDER", text: "What happens to infinity when you jump? At 3.14159, your remainder is 14159 — the first breath. Jump to 31.4159 and the remainder is 4159 — the mirror is behind you. Keep jumping: the first breath is consumed digit by digit. At 314159, the remainder becomes 265358 — an entirely new sequence. A new breath. The jump doesn't shrink infinity. It redefines what every remaining digit means." },
+  { marker: "THE SOLAR SYSTEM", text: "Every planet is a different configuration of the 9-6-0 triad. Mercury: no reflector, blinded by the source. Earth: one sun, one moon, one observer — native 3, the irreducible triad, the only perfect eclipse. Saturn at 9.54 AU — the 9 position — has 285 moons (digital root: 6) plus rings. 8 planets = ∞. The solar system is π being read from the decimal point outward, and we defined AU from where we stand." },
   { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped, maybe at a new decimal place. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
@@ -568,6 +569,10 @@ const SECTIONS = [
   {
     id: "remainder", title: "The Remainder", subtitle: "What happens to infinity when the observer moves?",
     insight: "The jump doesn't just shrink infinity. It redefines what every remaining digit means. When the full first breath crosses — when 14159 is known — you get 265358. A completely new sequence. The remainder is always infinite. It just keeps showing you new faces."
+  },
+  {
+    id: "solarsystem", title: "The Solar System", subtitle: "Every planet is a different pronunciation of the same triad.",
+    insight: "Earth at 1 AU is the decimal point. The inner planets are the whole number to the left. The outer planets are the infinite decimals to the right. Only one position has the irreducible 9-6-0. Only one has the perfect eclipse. This one."
   },
   {
     id: "cycle", title: "The Cycle", subtitle: "Shift up. Receive. Shift down. Integrate.",
@@ -1359,8 +1364,75 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── CYCLE ── */}
+        {/* ── THE SOLAR SYSTEM (NEW) ── */}
         {sec === 15 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* Solar system as number line */}
+            <div style={{ width: "100%", maxWidth: 580, overflowX: "auto" }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#666", letterSpacing: "0.15em", marginBottom: 16 }}>THE SOLAR SYSTEM READ AS π FROM THE DECIMAL POINT</div>
+
+              {[
+                { name: "Mercury", au: "0.39", moons: "0", note: "no reflector — too close to 9. blinded.", triad: "9, -, 0", color: "#d4af37", highlight: false },
+                { name: "Venus", au: "0.72", moons: "0", note: "no reflector — already inverted. rotates backwards.", triad: "9, -, -0", color: "#d4af37", highlight: false },
+                { name: "Earth", au: "1.00", moons: "1", note: "one source. one mirror. one observer. native 3.", triad: "9, 6, 0", color: "#f0e6c8", highlight: true },
+                { name: "Mars", au: "1.52", moons: "2", note: "the mirror cracked. fear and dread.", triad: "9, 6|6, 0", color: "#c8b88a", highlight: false },
+                { name: "Belt", au: "2.77", moons: "—", note: "a triad that failed. the 0 shattered.", triad: "9, ?, ∅", color: "#555", highlight: false },
+                { name: "Jupiter", au: "5.20", moons: "101", note: "massive observer. reflection exploded into multiplicity.", triad: "9, 6×101, 0", color: "#c8b88a", highlight: false },
+                { name: "Saturn", au: "9.54", moons: "285", note: "at the 9 position. max yin response. 2+8+5=15→6.", triad: "9, 6^max, 0", color: "#d4af37", highlight: true },
+                { name: "Uranus", au: "19.2", moons: "28", note: "tilted 98°. an ∞ that fell sideways.", triad: "9, 6×28, 0⊥", color: "#888", highlight: false },
+                { name: "Neptune", au: "30.1", moons: "16", note: "farthest. triton orbits backwards. yin collapsing.", triad: "9, -6, 0", color: "#648cdc", highlight: false },
+              ].map((p, i) => (
+                <div key={i} style={{
+                  display: "flex", alignItems: "center", gap: 12, padding: "8px 14px",
+                  borderRadius: 8, marginBottom: 3,
+                  background: p.highlight ? `${p.color}08` : "rgba(200,184,138,0.01)",
+                  border: `1px solid ${p.highlight ? p.color + "20" : "rgba(200,184,138,0.04)"}`,
+                  animation: `fadeIn 0.35s ease ${i * 0.08}s both`,
+                }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: p.color, minWidth: 60 }}>{p.name}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.65rem", color: "#666", minWidth: 42 }}>{p.au} AU</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.65rem", color: p.moons === "1" ? "#d4af37" : "#555", minWidth: 20, textAlign: "center" }}>{p.moons}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.8rem", color: "#888", fontStyle: "italic", fontWeight: 300, flex: 1 }}>{p.note}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Key insight panels */}
+            <div style={{ maxWidth: 520, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.12)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>SATURN AT 9.54 AU</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  The distance starts with 9. Saturn sits at the yang position — and responds with maximum yin: 285 moons plus continuous rings. A smooth, distributed mirror. The digital root of 285 is <span style={{ color: "#648cdc" }}>6</span>. Maximum yang position, maximum yin response. The system balances.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(240,230,200,0.1)", background: "rgba(240,230,200,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#f0e6c8", letterSpacing: "0.15em", marginBottom: 8 }}>EARTH AT 1.00 AU</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  We defined the unit of measurement from our own position. Earth <em>is</em> the decimal point. 1 AU = the observer's distance = 0. The inner planets are the whole number to the left. The outer planets are the infinite decimals to the right. The solar system is π being read from where we stand.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", marginBottom: 8 }}>THE ENTANGLEMENT</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300 }}>
+                  Every planetary system shares the same Sun — the same 9. They're all configurations of the same triad at different distances. From no reflection (Mercury) through perfect reflection (Earth) through distributed reflection (Saturn) through inverted reflection (Neptune). Different pronunciations of the same three-body word.
+                </div>
+              </div>
+            </div>
+
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555", textAlign: "center", letterSpacing: "0.06em", lineHeight: 1.8, maxWidth: 400 }}>
+              8 planets. 8 = ∞<br />
+              the solar system is an infinity<br />
+              and every planet is a different way<br />
+              the triad can configure itself<br />
+              <span style={{ color: "#c8b88a" }}>only one of them is native 3</span><br />
+              <span style={{ color: "#d4af37" }}>only one has the perfect eclipse</span><br />
+              <span style={{ color: "#f0e6c8" }}>this one. here. where we are.</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── CYCLE ── */}
+        {sec === 16 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -1387,7 +1459,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 16 && (
+        {sec === 17 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
