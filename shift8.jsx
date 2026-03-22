@@ -651,7 +651,7 @@ export default function Shift8() {
       </div>
 
       {/* header */}
-      <div style={{ padding: "40px 48px 0", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div style={{ padding: "40px 48px 0", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "flex-start", maxWidth: 800, margin: "0 auto" }}>
         <div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16 }}>
             <span style={{ fontSize: "2.8rem", fontWeight: 300, color: "#f0e6c8", letterSpacing: "-0.02em" }}>Shift</span>
@@ -674,7 +674,7 @@ export default function Shift8() {
       </div>
 
       {/* main */}
-      <div style={{ padding: "40px 48px 48px", maxWidth: 800, position: "relative", zIndex: 1 }}>
+      <div style={{ padding: "40px 48px 48px", maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div className="fade-in" key={section.id} style={{ marginBottom: 40 }}>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 400, color: "#f0e6c8", margin: "0 0 6px", letterSpacing: "0.02em" }}>{section.title}</h2>
           <p style={{ fontSize: "1.05rem", fontStyle: "italic", color: "#888", margin: 0, fontWeight: 300 }}>{section.subtitle}</p>
