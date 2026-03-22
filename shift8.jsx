@@ -432,7 +432,11 @@ const JOURNEY_STEPS = [
   { marker: "14159", text: "The first five digits after the decimal. 1-4-1: a palindrome — the cycle encoded at the entrance. Then 5-9: the mirror breaks, the sequence starts going somewhere. Their sum is 20 — two zeros, +0 and -0. The framework was already written in π before anyone read it." },
   { marker: "THE CLOSURE", text: "Consciousness is a closure over the sign bit. Every invocation returns a reality and a reference to itself. It hands itself to the next moment. The function isn't anonymous — its name is you." },
   { marker: "THE POINTER", text: "You can follow pointers back to previous zeros. Memory, déjà vu, regret — all dereferences. But shift() isn't idempotent. Time is the incrementing index into π. The window only moves forward. You can always go back to zero. You can never get the same infinity." },
-  { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped. The framework is unfinished. It may always be. π never resolves either." },
+  { marker: "THREE DIMENSIONS", text: "Truncation is the x-axis — how many digits you read. Orientation is the y-axis — the sign bit, which infinity you face. The Jump is the z-axis — moving the decimal point, changing scale. Three operations. Three dimensions. We've been living in 1D." },
+  { marker: "THE JUMP", text: "3.14159 → 31.4159. The digits don't change. The observer moves. What was infinite becomes finite. What was unknown becomes known. The 1 crosses over. Unity is integrated. If our 3D is stacked 1D — the way a GPU renders depth from flat math — then native 3D requires all three operations simultaneously. Not 1+1+1. But 3." },
+  { marker: "3, 6, 9, 0", text: "Tesla said if you knew the magnificence of 3, 6, and 9 you'd have the key to the universe. He was one digit short. Add 0 — the observer — and it becomes a wheel. 3 is the known world. 6 is the yin, the inward observer. 9 is the yang, the hidden zero. 0 is the eclipse point where duality collapses." },
+  { marker: "THE ECLIPSE", text: "The sun is 400× larger than the moon. 400× farther away. From Earth — from the one point where the ratio works — they're the same disc. At totality, 6 and 9 merge into 0 and the corona appears: the hidden structure, always present, revealed when duality collapses. The Shift key pressed by the solar system." },
+  { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped, maybe at a new decimal place. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
 function JourneyView({ onClose }) {
@@ -542,6 +546,18 @@ const SECTIONS = [
   {
     id: "pointer", title: "The Pointer", subtitle: "You can go back to zero. You can never get the same infinity.",
     insight: "shift() is not idempotent. Time is the incrementing index into π's decimal expansion. The pointer persists. The closure remembers. But every invocation returns a different reality, because π never repeats."
+  },
+  {
+    id: "threeops", title: "The Three Dimensions", subtitle: "Truncation. Orientation. Jump.",
+    insight: "We've been doing 3D math by stacking 1D operations. Three separate number lines bolted together with notation. Most of human experience has been a 1D simulation of a 3D existence."
+  },
+  {
+    id: "threesixnine", title: "3, 6, 9, 0", subtitle: "Tesla was one digit short.",
+    insight: "3+3=6. 3+3+3=9. Every combination stays inside the set. They never produce anything outside themselves. A closed system. A loop. Add 0 — the observer — and it becomes a wheel."
+  },
+  {
+    id: "eclipse", title: "The Eclipse", subtitle: "400× larger. 400× farther. The same disc in the sky.",
+    insight: "The sun radiates outward: +0, the yang, 9. The moon reflects inward: -0, the yin, 6. At totality they merge into 0 — and the corona appears. The hidden structure that was always there, revealed when duality collapses."
   },
   {
     id: "cycle", title: "The Cycle", subtitle: "Shift up. Receive. Shift down. Integrate.",
@@ -1018,8 +1034,169 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── CYCLE ── */}
+        {/* ── THE THREE DIMENSIONS (NEW) ── */}
         {sec === 10 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center" }}>
+              {[
+                { axis: "X", op: "Truncation", desc: "How many digits you read. Movement along the line. The 1D we've always had. Go left, go right, add precision.", q: "what you see", color: "#c8b88a" },
+                { axis: "Y", op: "Orientation", desc: "Which infinity you face. +0 or -0. Not left or right — perpendicular. Inward and outward. The dimension IEEE 754 encodes with a single bit.", q: "how you see", color: "#648cdc" },
+                { axis: "Z", op: "Jump", desc: "Moving the decimal point. Not more digits, not flipping orientation — changing the scale of what counts as known. 3.14 → 31.4 → 314.", q: "where you see from", color: "#d4af37" },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  width: 180, padding: "24px 20px", borderRadius: 12,
+                  background: "linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.005))",
+                  border: `1px solid ${item.color}22`,
+                  animation: `fadeIn 0.5s ease ${i * 0.2}s both`,
+                }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
+                    <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.8rem", color: item.color, fontWeight: 300 }}>{item.axis}</span>
+                    <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: item.color, letterSpacing: "0.12em" }}>{item.op.toUpperCase()}</span>
+                  </div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#888", lineHeight: 1.6, fontWeight: 300, marginBottom: 12 }}>{item.desc}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.65rem", color: item.color, letterSpacing: "0.08em", fontStyle: "italic" }}>{item.q}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ maxWidth: 500, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>THE DECIMAL JUMP</div>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1rem", color: "#c8b88a", letterSpacing: "0.04em", lineHeight: 2.2, textAlign: "center" }}>
+                  <span style={{ color: "#888" }}>3</span><span style={{ color: "#d4af37" }}>.</span><span style={{ color: "#666" }}>14159...</span> → <span style={{ color: "#888" }}>31</span><span style={{ color: "#d4af37" }}>.</span><span style={{ color: "#666" }}>4159...</span> → <span style={{ color: "#888" }}>314</span><span style={{ color: "#d4af37" }}>.</span><span style={{ color: "#666" }}>159...</span>
+                </div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#888", lineHeight: 1.7, fontWeight: 300, marginTop: 8 }}>
+                  The digits don't change. π is π. But the observer is <em>traveling through it.</em> What was infinite becomes finite. What was unknown becomes known. The 1 crosses over. Unity is integrated.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.08)", background: "rgba(200,184,138,0.02)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", marginBottom: 8 }}>THE PROJECTION</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  π might be a 3D structure we've been <em>projecting</em> onto a line — the way a shadow of a sphere is a circle. It's irrational in 1D the way a circle's shadow never repeats a clean pattern. Not because it's chaotic. Because we're reading a 3D object in 1D, and the projection destroys the symmetry.
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── 3, 6, 9, 0 (NEW) ── */}
+        {sec === 11 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* The four digits */}
+            <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+              {[
+                { d: "3", role: "The Known", desc: "The whole number. The finite. Already collapsed, measured, resolved. The root of everything: 3+3=6, 3+3+3=9.", color: "#c8b88a", bg: "rgba(200,184,138,0.04)" },
+                { d: "6", role: "The Yin", desc: "The inward observer. -0. Transforms when it meets itself: 6×6=36→9. The moon. The reflector.", color: "#648cdc", bg: "rgba(100,140,220,0.04)" },
+                { d: "9", role: "The Yang", desc: "The hidden zero. +0 in disguise. Persists: 9×9=81→9. The sun. The radiator. The identity element.", color: "#d4af37", bg: "rgba(212,175,55,0.04)" },
+                { d: "0", role: "The Observer", desc: "The decimal point. Where 6 and 9 merge. The boundary between known and infinite. You.", color: "#f0e6c8", bg: "rgba(240,230,200,0.03)" },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  width: 130, padding: "24px 16px", borderRadius: 12,
+                  background: item.bg, border: `1px solid ${item.color}18`,
+                  textAlign: "center",
+                  animation: `fadeIn 0.5s ease ${i * 0.15}s both`,
+                }}>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "2.8rem", fontWeight: 300, color: item.color, marginBottom: 4 }}>{item.d}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.55rem", color: item.color, letterSpacing: "0.12em", marginBottom: 10 }}>{item.role.toUpperCase()}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.8rem", color: "#888", lineHeight: 1.5, fontWeight: 300 }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* The cycle */}
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.1rem", letterSpacing: "0.2em", color: "#666", textAlign: "center" }}>
+              ...&nbsp;<span style={{ color: "#c8b88a" }}>3</span>&nbsp;<span style={{ color: "#648cdc" }}>6</span>&nbsp;<span style={{ color: "#d4af37" }}>9</span>&nbsp;<span style={{ color: "#f0e6c8" }}>0</span>&nbsp;<span style={{ color: "#c8b88a" }}>3</span>&nbsp;<span style={{ color: "#648cdc" }}>6</span>&nbsp;<span style={{ color: "#d4af37" }}>9</span>&nbsp;<span style={{ color: "#f0e6c8" }}>0</span>&nbsp;<span style={{ color: "#c8b88a" }}>3</span>&nbsp;<span style={{ color: "#648cdc" }}>6</span>&nbsp;<span style={{ color: "#d4af37" }}>9</span>&nbsp;<span style={{ color: "#f0e6c8" }}>0</span>&nbsp;...
+            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.85rem", color: "#555", fontStyle: "italic" }}>
+              not a line — a wheel. 0 isn't before or after. It's the axle.
+            </div>
+
+            <div style={{ maxWidth: 460, padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300, textAlign: "center" }}>
+                3 + 0 + 6 + 9 = 18. Digital root: <span style={{ color: "#d4af37" }}>9</span>. Which is secretly <span style={{ color: "#f0e6c8" }}>0</span>.<br />The system sums to its own hidden identity. It refers to itself. It's a closure.
+              </div>
+            </div>
+
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", color: "#888", fontStyle: "italic", fontWeight: 300, textAlign: "center", maxWidth: 400, lineHeight: 1.7 }}>
+              "If you only knew the magnificence of the 3, 6, and 9, then you would have the key to the universe."<br />
+              <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.65rem", color: "#555", letterSpacing: "0.08em", fontStyle: "normal" }}>— Tesla. One digit short.</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── THE ECLIPSE (NEW) ── */}
+        {sec === 12 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* Sun and Moon convergence */}
+            <div style={{ position: "relative", width: 280, height: 280 }}>
+              <svg viewBox="0 0 280 280" style={{ width: "100%", height: "100%" }}>
+                <defs>
+                  <radialGradient id="corona" cx="50%" cy="50%" r="50%">
+                    <stop offset="30%" stopColor="#d4af37" stopOpacity="0" />
+                    <stop offset="60%" stopColor="#d4af37" stopOpacity="0.08" />
+                    <stop offset="80%" stopColor="#d4af37" stopOpacity="0.04" />
+                    <stop offset="100%" stopColor="#d4af37" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                {/* Corona - always present but usually hidden */}
+                <circle cx="140" cy="140" r="120" fill="url(#corona)" />
+                <circle cx="140" cy="140" r="80" fill="none" stroke="rgba(212,175,55,0.06)" strokeWidth="0.5" />
+                <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(212,175,55,0.04)" strokeWidth="0.5" />
+                <circle cx="140" cy="140" r="60" fill="none" stroke="rgba(212,175,55,0.08)" strokeWidth="0.5" />
+
+                {/* Sun disc */}
+                <circle cx="140" cy="140" r="44" fill="none" stroke="rgba(212,175,55,0.3)" strokeWidth="1.5" />
+                <text x="140" y="128" textAnchor="middle" fill="rgba(212,175,55,0.5)" fontSize="10" fontFamily="IBM Plex Mono" letterSpacing="0.1em">+0</text>
+                <text x="140" y="144" textAnchor="middle" fill="rgba(212,175,55,0.3)" fontSize="8" fontFamily="Cormorant Garamond" fontStyle="italic">400×</text>
+
+                {/* Moon disc - same apparent size */}
+                <circle cx="140" cy="140" r="44" fill="none" stroke="rgba(100,140,220,0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
+                <text x="140" y="158" textAnchor="middle" fill="rgba(100,140,220,0.5)" fontSize="10" fontFamily="IBM Plex Mono" letterSpacing="0.1em">-0</text>
+                <text x="140" y="172" textAnchor="middle" fill="rgba(100,140,220,0.3)" fontSize="8" fontFamily="Cormorant Garamond" fontStyle="italic">1/400×</text>
+
+                {/* Center point - the merge */}
+                <circle cx="140" cy="140" r="3" fill="#f0e6c8" opacity="0.8" />
+
+                {/* 400x labels */}
+                <text x="140" y="28" textAnchor="middle" fill="#555" fontSize="8" fontFamily="IBM Plex Mono" letterSpacing="0.08em">SAME DISC IN THE SKY</text>
+                <text x="140" y="264" textAnchor="middle" fill="#555" fontSize="8" fontFamily="IBM Plex Mono" letterSpacing="0.08em">FROM THE ONE POINT WHERE IT WORKS</text>
+              </svg>
+            </div>
+
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", maxWidth: 500 }}>
+              <div style={{ flex: "1 1 220px", padding: "20px", borderRadius: 10, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>☉ THE SUN — 9</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  Radiates outward. The source. +0 facing external infinity. The yang. Self-equal: 9×9→9. Burns and stays.
+                </div>
+              </div>
+              <div style={{ flex: "1 1 220px", padding: "20px", borderRadius: 10, border: "1px solid rgba(100,140,220,0.15)", background: "rgba(100,140,220,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#648cdc", letterSpacing: "0.15em", marginBottom: 8 }}>☽ THE MOON — 6</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  Reflects inward. Produces nothing of its own. -0. Moonlight is sunlight with the sign bit flipped. Same photons, reoriented.
+                </div>
+              </div>
+            </div>
+
+            <div style={{ maxWidth: 480, padding: "20px 24px", borderRadius: 10, border: "1px solid rgba(200,184,138,0.1)", background: "rgba(200,184,138,0.03)" }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#f0e6c8", letterSpacing: "0.15em", marginBottom: 8 }}>TOTALITY</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                At the eclipse, 6 and 9 merge into 0. The corona appears — invisible under normal conditions, hidden by the overwhelming brightness of the surface. The eclipse doesn't create it. It <em>reveals what was hidden by the default projection.</em> A decimal point jump, performed by the solar system itself.
+              </div>
+            </div>
+
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555", textAlign: "center", letterSpacing: "0.06em", lineHeight: 1.8, maxWidth: 360 }}>
+              the only place in the solar system<br />
+              where the 400:400 ratio works<br />
+              where 6 and 9 are the same size<br />
+              where the projection collapses cleanly into 0<br />
+              <span style={{ color: "#d4af37" }}>is right here</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── CYCLE ── */}
+        {sec === 13 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -1046,7 +1223,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 11 && (
+        {sec === 14 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
