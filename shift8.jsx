@@ -436,6 +436,7 @@ const JOURNEY_STEPS = [
   { marker: "THE JUMP", text: "3.14159 → 31.4159. The digits don't change. The observer moves. What was infinite becomes finite. What was unknown becomes known. The 1 crosses over. Unity is integrated. If our 3D is stacked 1D — the way a GPU renders depth from flat math — then native 3D requires all three operations simultaneously. Not 1+1+1. But 3." },
   { marker: "3, 6, 9, 0", text: "Tesla said if you knew the magnificence of 3, 6, and 9 you'd have the key to the universe. He was one digit short. Add 0 — the observer — and it becomes a wheel. 3 is the known world. 6 is the yin, the inward observer. 9 is the yang, the hidden zero. 0 is the eclipse point where duality collapses." },
   { marker: "THE ECLIPSE", text: "The sun is 400× larger than the moon. 400× farther away. From Earth — from the one point where the ratio works — they're the same disc. At totality, 6 and 9 merge into 0 and the corona appears: the hidden structure, always present, revealed when duality collapses. The Shift key pressed by the solar system." },
+  { marker: "NATIVE 3", text: "1+1+1=3≠3. Stacked three is assembled from ones on a 1D line. Native three is prime, irreducible, emergent. The sun(9) and moon(6) don't add up to Earth(0) — they generate the conditions for the observer to exist. 9-6=3: the known world is the tension between source and mirror. We've been reading π in 1D when it was written in 3." },
   { marker: "±0′", text: "The equation always returns to zero. A new zero — maybe with its sign bit flipped, maybe at a new decimal place. The framework is unfinished. It may always be. π never resolves either." },
 ];
 
@@ -558,6 +559,10 @@ const SECTIONS = [
   {
     id: "eclipse", title: "The Eclipse", subtitle: "400× larger. 400× farther. The same disc in the sky.",
     insight: "The sun radiates outward: +0, the yang, 9. The moon reflects inward: -0, the yin, 6. At totality they merge into 0 — and the corona appears. The hidden structure that was always there, revealed when duality collapses."
+  },
+  {
+    id: "native3", title: "Native 3", subtitle: "1 + 1 + 1 = 3 ≠ 3",
+    insight: "3 is prime. Irreducible. Not built from parts. The sun and moon don't add up to Earth — they generate the conditions in which the observer can exist. 9 - 6 = 3. The known world is the tension between source and mirror."
   },
   {
     id: "cycle", title: "The Cycle", subtitle: "Shift up. Receive. Shift down. Integrate.",
@@ -1195,8 +1200,94 @@ export default function Shift8() {
           </div>
         )}
 
-        {/* ── CYCLE ── */}
+        {/* ── NATIVE 3 (NEW) ── */}
         {sec === 13 && (
+          <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
+            {/* The equation */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.8rem", fontWeight: 300, color: "#888", letterSpacing: "0.08em" }}>
+                <span style={{ color: "#666" }}>1 + 1 + 1 = </span><span style={{ color: "#c8b88a" }}>3</span><span style={{ color: "#666" }}> ≠ </span><span style={{ color: "#d4af37", fontSize: "2.2rem" }}>3</span>
+              </div>
+              <div style={{ display: "flex", gap: 32, fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.12em" }}>
+                <span style={{ color: "#666" }}>STACKED</span>
+                <span style={{ color: "#d4af37" }}>NATIVE</span>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", maxWidth: 520 }}>
+              <div style={{ flex: "1 1 230px", padding: "20px", borderRadius: 10, border: "1px solid rgba(200,184,138,0.08)", background: "rgba(200,184,138,0.02)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#666", letterSpacing: "0.15em", marginBottom: 8 }}>1 + 1 + 1</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300 }}>
+                  Three ones stacked sequentially on a 1D line. Assembled from parts. Constructed from outside. The way a GPU builds depth from flat math. Simulated.
+                </div>
+              </div>
+              <div style={{ flex: "1 1 230px", padding: "20px", borderRadius: 10, border: "1px solid rgba(212,175,55,0.12)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>3</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  Prime. Irreducible. Cannot be produced by multiplying smaller numbers. Not built from parts. You can't arrive at it through combination — only through recognition. It was always there.
+                </div>
+              </div>
+            </div>
+
+            {/* The triad */}
+            <div style={{ position: "relative", width: 300, height: 260 }}>
+              <svg viewBox="0 0 300 260" style={{ width: "100%", height: "100%" }}>
+                {/* Triangle connecting the three */}
+                <line x1="150" y1="30" x2="50" y2="220" stroke="rgba(212,175,55,0.12)" strokeWidth="1" />
+                <line x1="150" y1="30" x2="250" y2="220" stroke="rgba(100,140,220,0.12)" strokeWidth="1" />
+                <line x1="50" y1="220" x2="250" y2="220" stroke="rgba(200,184,138,0.08)" strokeWidth="1" />
+
+                {/* Sun - 9 - top */}
+                <circle cx="150" cy="30" r="24" fill="none" stroke="rgba(212,175,55,0.4)" strokeWidth="1.5" />
+                <text x="150" y="27" textAnchor="middle" fill="#d4af37" fontSize="18" fontFamily="IBM Plex Mono" fontWeight="300">9</text>
+                <text x="150" y="44" textAnchor="middle" fill="rgba(212,175,55,0.5)" fontSize="8" fontFamily="IBM Plex Mono" letterSpacing="0.1em">SUN</text>
+
+                {/* Moon - 6 - bottom left */}
+                <circle cx="50" cy="220" r="24" fill="none" stroke="rgba(100,140,220,0.4)" strokeWidth="1.5" />
+                <text x="50" y="217" textAnchor="middle" fill="#648cdc" fontSize="18" fontFamily="IBM Plex Mono" fontWeight="300">6</text>
+                <text x="50" y="234" textAnchor="middle" fill="rgba(100,140,220,0.5)" fontSize="8" fontFamily="IBM Plex Mono" letterSpacing="0.1em">MOON</text>
+
+                {/* Earth - 0 - bottom right */}
+                <circle cx="250" cy="220" r="24" fill="none" stroke="rgba(240,230,200,0.4)" strokeWidth="1.5" />
+                <text x="250" y="217" textAnchor="middle" fill="#f0e6c8" fontSize="18" fontFamily="IBM Plex Mono" fontWeight="300">0</text>
+                <text x="250" y="234" textAnchor="middle" fill="rgba(240,230,200,0.5)" fontSize="8" fontFamily="IBM Plex Mono" letterSpacing="0.1em">EARTH</text>
+
+                {/* 9 - 6 = 3 along the left edge */}
+                <text x="85" y="130" textAnchor="middle" fill="rgba(200,184,138,0.35)" fontSize="10" fontFamily="IBM Plex Mono" transform="rotate(-45 85 130)">9 − 6 = 3</text>
+
+                {/* Center: emergent 3 */}
+                <text x="150" y="160" textAnchor="middle" fill="rgba(212,175,55,0.6)" fontSize="32" fontFamily="IBM Plex Mono" fontWeight="300">3</text>
+                <text x="150" y="178" textAnchor="middle" fill="rgba(200,184,138,0.3)" fontSize="7" fontFamily="IBM Plex Mono" letterSpacing="0.15em">EMERGENT</text>
+              </svg>
+            </div>
+
+            <div style={{ maxWidth: 480, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(212,175,55,0.1)", background: "rgba(212,175,55,0.03)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#d4af37", letterSpacing: "0.15em", marginBottom: 8 }}>THE TRIAD</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#c8b88a", lineHeight: 1.7, fontWeight: 300 }}>
+                  The sun and moon don't <em>add up to</em> Earth. They <em>generate the conditions in which the observer can exist.</em> Without the sun: nothing to observe. Without the moon: no reflection, no contrast, no sign bit flip. Without both in the right relationship: no 0. No decimal point. No you.
+                </div>
+              </div>
+              <div style={{ padding: "16px 20px", borderRadius: 8, border: "1px solid rgba(200,184,138,0.06)", background: "rgba(200,184,138,0.015)" }}>
+                <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: "#888", letterSpacing: "0.15em", marginBottom: 8 }}>THE WHOLE NUMBER</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.95rem", color: "#888", lineHeight: 1.7, fontWeight: 300 }}>
+                  <span style={{ color: "#d4af37" }}>3</span>.14159... — the 3 isn't arbitrary. It's the product of the triad. The tension between source and mirror, resolved into the known world. And everything after the decimal — after you, after 0 — is what native 3 makes possible.
+                </div>
+              </div>
+            </div>
+
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.7rem", color: "#555", textAlign: "center", letterSpacing: "0.06em", lineHeight: 1.8 }}>
+              three dimensions aren't three axes bolted together<br />
+              they're what you get when a source, a reflector<br />
+              and the space between them form a system<br />
+              <span style={{ color: "#c8b88a" }}>we haven't been reading π wrong</span><br />
+              <span style={{ color: "#d4af37" }}>we've been reading it in 1D when it was written in 3</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── CYCLE ── */}
+        {sec === 14 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
             <div style={{ position: "relative", width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" style={{ width: "100%", height: "100%" }}>
@@ -1223,7 +1314,7 @@ export default function Shift8() {
         )}
 
         {/* ── ASTERISK ── */}
-        {sec === 14 && (
+        {sec === 15 && (
           <div className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 28, alignItems: "center" }}>
             <div style={{ fontSize: "8rem", color: "#d4af37", fontWeight: 300, textShadow: "0 0 60px rgba(212,175,55,0.3),0 0 120px rgba(212,175,55,0.1)", animation: "float 4s ease-in-out infinite", fontFamily: "'IBM Plex Mono', monospace" }}>✳</div>
             <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", color: "#666", textAlign: "center", letterSpacing: "0.08em", lineHeight: 2.2 }}>
