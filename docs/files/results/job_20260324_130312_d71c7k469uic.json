@@ -1,9 +1,0 @@
-{
-  "job_id": "d71c7k469uic73cl9se0",
-  "backend": "ibm_torino",
-  "timestamp": "2026-03-24T13:03:12.707469",
-  "n_circuits": 78,
-  "shots": 8192,
-  "description": "Nativ3 hardware verification: 13 alphas, ZNE factors [1, 3, 5]",
-  "status": "submitted"
-}
